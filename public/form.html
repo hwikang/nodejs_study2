@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+</head>
+<body>
+    <form method="post" action="/email_post">
+        EMAIL : <input type="text" name="email" id="email">
+        <input type="submit"/>
+    </form>    
+
+    <button class="ajaxsend">ajaxsend</button>
+    <div class="result"></div>
+    <script>
+        document.querySelector(".ajaxsend").addEventListener('click',function(){
+            let inputData = document.querySelector("#email").value;
+            sendAjax('http://localhost:3000/ajax_send_email',inputData)
+        })
+
+        function sendAjax(url,data){
+            let data2 = {email:data};
+            console.log(data2)
+            data2 = JSON.stringify(data2);
+            console.log(data2)
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST',url);
+            xhr.setRequestHeader('Content-Type',"application/json");
+            xhr.send(data2);  //string 으로 보내줘야함
+            xhr.addEventListener('load',function(){
+                let result  = xhr.responseText  //라우터에서  res.json(responseData); 쏴준거임
+                result = JSON.parse(result);
+                console.log(result)
+                document.querySelector('.result').innerHTML = result.email
+            })
+        }
+    </script>
+</body>
+</html>
