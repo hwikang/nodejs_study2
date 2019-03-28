@@ -8,7 +8,7 @@
   
 </head>
 <body>
-    <form method="post" action="/email_post">
+    <form method="post" action="/email/form">
         EMAIL : <input type="text" name="email" id="email">
         <input type="submit"/>
     </form>    
@@ -18,14 +18,14 @@
     <script>
         document.querySelector(".ajaxsend").addEventListener('click',function(){
             let inputData = document.querySelector("#email").value;
-            sendAjax('http://localhost:3000/ajax_send_email',inputData)
+            sendAjax('http://localhost:3000/email/ajax',inputData)
         })
 
         function sendAjax(url,data){
             let data2 = {email:data};
-            console.log(data2)
+           
             data2 = JSON.stringify(data2);
-            console.log(data2)
+           
             let xhr = new XMLHttpRequest();
             xhr.open('POST',url);
             xhr.setRequestHeader('Content-Type',"application/json");
@@ -34,7 +34,7 @@
                 let result  = xhr.responseText  //라우터에서  res.json(responseData); 쏴준거임
                 result = JSON.parse(result);
                 console.log(result)
-                document.querySelector('.result').innerHTML = result.email
+                document.querySelector('.result').innerHTML = result.name
             })
         }
     </script>
